@@ -25,7 +25,7 @@ const orderShcema = new Schema<TOrder>(
       requred: true,
     },
     date: { type: String, requird: true },
-    status: { type: String, requird: true, default: "initailize" },
+    status: { type: String, requird: true, default: "initialize" },
     orderItem: [orderItemSchema],
   },
   {

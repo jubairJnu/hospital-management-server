@@ -9,10 +9,8 @@ import { generateOrderId } from "../../utis/GenerateOrderId";
 // create order
 
 const createOrderIntoDB = async (paylod: TOrder) => {
-  console.log(paylod, "payload intital");
+  // console.log(paylod, "payload intital");
   const orderId = await generateOrderId();
-
-  
 
   paylod.orderId = orderId;
 
