@@ -1,12 +1,17 @@
 import { model, Schema } from "mongoose";
 import { TOrder, TOrderItems } from "./order.interface";
 
-const orderItemSchema = new Schema<TOrderItems>({
-  itemId: {
-    type: Schema.Types.ObjectId,
-    ref: "Item",
+const orderItemSchema = new Schema<TOrderItems>(
+  {
+    itemId: {
+      type: Schema.Types.ObjectId,
+      ref: "Item",
+    },
   },
-});
+  {
+    _id: false,
+  }
+);
 
 const orderShcema = new Schema<TOrder>(
   {

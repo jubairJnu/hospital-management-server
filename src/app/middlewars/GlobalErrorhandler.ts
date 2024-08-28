@@ -8,7 +8,7 @@ export const GlobalErrorHandler: ErrorRequestHandler = (
   res,
   next
 ) => {
-  console.log("Middleware Error Hadnling");
+  console.log("Middleware Error Hadnling", err);
   const errStatus = err.statusCode || 500;
   const errMsg = err.message || "Something went wrong";
   res.status(errStatus).json({
