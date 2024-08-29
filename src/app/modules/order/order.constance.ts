@@ -1,1 +1,1 @@
-export const orderSearchableField = ["oderId", "name", "date"];
+export const orderSearchableField = ["orderId"];

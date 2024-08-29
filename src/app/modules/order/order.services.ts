@@ -5,6 +5,8 @@ import { orderSearchableField } from "./order.constance";
 import { TOrder } from "./order.interface";
 import { Order } from "./order.model";
 import { generateOrderId } from "../../utis/GenerateOrderId";
+import mongoose from "mongoose";
+import { TItems } from "../items/items.interface";
 
 // create order
 
@@ -14,7 +16,7 @@ const createOrderIntoDB = async (paylod: TOrder) => {
 
   paylod.orderId = orderId;
 
-  console.log(paylod, "payload");
+
 
   const result = await Order.create(paylod);
 
@@ -24,6 +26,7 @@ const createOrderIntoDB = async (paylod: TOrder) => {
 // get all order
 
 const getAllOrderFromDB = async (query: Record<string, unknown>) => {
+  // console.log("quer inservice", query);
   const orderQuery = new QueryBuilder(
     Order.find().populate("orderItem.itemId"),
     query
@@ -63,14 +66,20 @@ const searchOrderFromDB = async (query: Record<string, unknown>) => {
 
 // update order item
 
-const updateOrderIntemIntoDB = async (id: string, itemId: string) => {
+const updateOrderIntemIntoDB = async (id: string, payload: Partial<TItems>) => {
+  const itemObjectId = new mongoose.Types.ObjectId(payload.itemId);
+
+
+
   const isExistOrder = await Order.findById(id);
 
   if (!isExistOrder) {
     throw new AppError(httpStatus.NOT_FOUND, "Order not Found");
   }
-  const itemExists = isExistOrder.orderItem.some(
-    (orderItem) => orderItem.itemId.toString() === itemId
+  // Log the existing order items and the item to check
+
+  const itemExists = isExistOrder.orderItem.some((orderItem) =>
+    orderItem.itemId.equals(itemObjectId)
   );
 
   if (itemExists) {
@@ -80,7 +89,7 @@ const updateOrderIntemIntoDB = async (id: string, itemId: string) => {
   const result = await Order.findByIdAndUpdate(
     id,
     {
-      $addToSet: { orderItem: itemId },
+      $addToSet: { orderItem: { itemId: itemObjectId } },
     },
     {
       new: true,
