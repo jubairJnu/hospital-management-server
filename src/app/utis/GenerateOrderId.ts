@@ -60,7 +60,7 @@ export const generateItemId = async () => {
   }
 
   const incrementId = (Number(currentId) + 1).toString().padStart(3, "0");
-  console.log("incre", incrementId);
+  
 
   return incrementId;
 };
