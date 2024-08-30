@@ -10,7 +10,13 @@ router.post("/", OrderControllers.createOrder);
 
 router.get("/", OrderControllers.getAllOrder);
 
+//
+
+router.get("/pdf/:id", OrderControllers.generatePdf);
+
 // update
+router.patch("/update/:id", OrderControllers.updateOrderInfo);
+
 router.patch("/:id", OrderControllers.updateOrder);
 
 export const OrderRoutes = router;

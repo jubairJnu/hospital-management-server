@@ -18,14 +18,15 @@ const findLastOrderId = async () => {
 };
 
 export const generateOrderId = async () => {
-  let currentId = (0).toString();
+  let currentId = "0";
   const lastOrderid = await findLastOrderId();
 
   if (lastOrderid) {
-    currentId = lastOrderid.substring(2);
+    currentId = lastOrderid;
   }
 
   const incrementId = (Number(currentId) + 1).toString().padStart(3, "0");
+ 
 
   return incrementId;
 };
@@ -35,7 +36,7 @@ export const generateOrderId = async () => {
 // generate item id
 
 const findLastItemId = async () => {
-  const lastOrder = await Item.findOne(
+  const lastItem = await Item.findOne(
     {},
     {
       itemId: 1,
@@ -47,18 +48,19 @@ const findLastItemId = async () => {
     })
     .lean();
 
-  return lastOrder?.itemId ? lastOrder.itemId : undefined;
+  return lastItem?.itemId ? lastItem.itemId : undefined;
 };
 
 export const generateItemId = async () => {
-  let currentId = (0).toString();
+  let currentId = "0";
   const lastItemid = await findLastItemId();
 
   if (lastItemid) {
-    currentId = lastItemid.substring(2);
+    currentId = lastItemid;
   }
 
   const incrementId = (Number(currentId) + 1).toString().padStart(3, "0");
+  console.log("incre", incrementId);
 
   return incrementId;
 };
